@@ -285,26 +285,38 @@
     }));
     }
     }
-    function loop() {
-    if(!ctx.running) return;
+function loop() {
+    if (!ctx.running) return;
+    
+
     ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = 'rgba(8,5,16,0.4)';
+
+    ctx.fillStyle = 'rgb(0, 0, 0)'; 
+
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    
     ctx.globalCompositeOperation = 'lighter';
-    ctx.strokeStyle = 'hsla(' + Math.round(hue.update()) + ',90%,50%,0.25)';
+
+    ctx.strokeStyle = 'hsla(' + Math.round(hue.update()) + ', 90%, 50%, 0.25)';
     ctx.lineWidth = 1;
-    if(ctx.frame % 60 == 0) {
-    console.log(hue.update(), Math.round(hue.update()), hue.phase, hue.offset, hue.frequency, hue.amplitude);
+
+    if (ctx.frame % 60 == 0) {
+        console.log(hue.update(), Math.round(hue.update()), hue.phase, hue.offset, hue.frequency, hue.amplitude);
     }
-    for(var i = 0, tendril; i < settings.trails; i++) {
-    tendril = tendrils[i];
-    tendril.update();
-    tendril.draw();
+
+
+    for (var i = 0; i < settings.trails; i++) {
+        var tendril = tendrils[i];
+        tendril.update();
+        tendril.draw();
     }
+
     ctx.frame++;
+    
     ctx.stats.update();
     requestAnimFrame(loop);
-    }
+}
+
     function resize() {
     ctx.canvas.width = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
